@@ -503,7 +503,7 @@ def secure():
         print("- your Account have no data to solve the secure ! , please link an email to continue and try again")
         close()
 
-def comment(post_link, id, slp):
+def comment(post_link, id):
     global spam, sent, baned
     api = f'https://www.instagram.com/web/comments/{id}/add/'
 
@@ -527,8 +527,8 @@ def comment(post_link, id, slp):
         'x-instagram-ajax': '3c8826838272',
         'x-requested-with': 'XMLHttpRequest',
     }
-
-    ask = int('- [1] Random Words , [2] Write Some Words : ')
+    slp = int(input('- sleep : '))
+    ask = int(input('- [1] Random Words , [2] Write Some Words : '))
     if ask == 1:
         lists = ['suigwwugr9o8gev', '23098v89we8907g', 'ewrp890y907re', 'eqw897y034', 'eoihifdoiuso', 'eorihvoiwuehpuih']
         while 1:
@@ -581,13 +581,15 @@ def comment(post_link, id, slp):
             else:
                 print(f'\r- Sent : {sent} , spam : {spam} , baned : {baned}', end=' ')
                 sleep(500)
+    else:
+    	print("- Wrong input man !")
+    	close()
 
 def login():
 
     if 'userId' in log.text:
         print("- logged in Successfully !")
         post_link = input('- Enter Post link : ')
-        slept = int(input('- Sleep : '))
         if '?igshid' in post_link:
             cut = post_link.split('?')[0]
             info = f'{cut}?__a=1'
@@ -612,7 +614,7 @@ def login():
         }
         get_id = req.get(info, headers=get_id_head).json()
         id = get_id['graphql']['shortcode_media']['id']
-        comment(post_link, id, slept)
+        comment(post_link, id)
     elif '"user":false,"authenticated":false' in log.text:
         print("- Check your username & try again !")
         close()
@@ -622,8 +624,6 @@ def login():
     elif 'checkpoint_required' in log.text:
         secure()
         post_link = input('- Enter Post link : ')
-        print('- Best Sleep is 2 or 3 ;)')
-        slept = int(input('- Sleep : '))
         if '?igshid' in post_link:
             cut = post_link.split('?')[0]
             info = f'{cut}?__a=1'
@@ -648,11 +648,11 @@ def login():
         }
         get_id = req.get(info, headers=get_id_head).json()
         id = get_id['graphql']['shortcode_media']['id']
-        comment(post_link, id, slept)
+        comment(post_link, id)
     elif 'two_factor_required":true' in log.text:
         two_factor()
         post_link = input('- Enter Post link : ')
-        slept = int(input('- Sleep : '))
+        
         if '?igshid' in post_link:
             cut = post_link.split('?')[0]
             info = f'{cut}?__a=1'
@@ -677,7 +677,7 @@ def login():
         }
         get_id = req.get(info, headers=get_id_head).json()
         id = get_id['graphql']['shortcode_media']['id']
-        comment(post_link, id, slept)
+        comment(post_link, id)
     elif 'Please wait a few minutes before you try again.' in log.text:
         print('- You Got blocked , please try again later ;)')
         close()
